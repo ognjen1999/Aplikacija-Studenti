@@ -1,0 +1,140 @@
+<h1>Aplikacija Departments</h1>
+<div class="d-flex justify-content-between w-100 bg-dark align-items-center p-2">
+    <button class="btn btn-sm btn-secondary" (click)="activeAddDepartmentModal()" >+ Add New Department</button>
+
+    <div class="form-group d-flex pt-2">
+        <button class="btn btn-sm btn-primary d-flex pt-2"><span> <i class="bi bi-search"></i> </span> Search</button>
+        <input placeholder="Search Department" [(ngModel)]="findDepartment" type="text" class="form-control ml-2 mx-2">
+    </div>
+</div>
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Subjects</th>
+            <th>Year of study</th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let department of departments | filter:findDepartment
+        | paginate: {
+            itemsPerPage: tableSize,
+            currentPage:page,
+            totalItems:count}
+        ">
+            <td>{{department.depName}}</td>
+            <td>{{department.depSbj}}</td>
+            <td>{{department.yearOfStudy}}</td>
+            <td>
+            </td>
+            <td>
+                <button class="btn btn-sm btn-danger" (click)="deleteDepartment(department.id)">Delete</button>
+            </td>
+            <td>
+                <button class="btn btn-sm btn-warning" (click)="editDepartmentModal(department.id)">Edit</button>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<footer>
+    <pagination-controls  nextLabel="Next" previousLabel="Prev" (pageChange)="onTableDataChange($event)">
+    </pagination-controls>
+</footer>
+
+<!--EDIT DEPARTMENT-->
+
+<div *ngIf="_editDepartmentModal" class="editUserModal modalForToggle">
+
+    <form [formGroup]="DepartmentFormBuilderEdit" #form="ngForm" (ngSubmit)="updateDepartment(form)">
+    <div class="w-100 d-flex justify-content-between">
+        <h2>Edit This Department</h2>
+          <p (click)="closeEditDepartmentModal()">X</p>
+    </div>
+        <div class="form-group">
+            <label for="depName">Department Name</label>
+            <input (keydown)="perventWhiteSpace($event)" type="text" formControlName="depName" id="depName" name="depName" class="form-control">
+        </div>
+
+        <div class="form-group" formArrayName="depSbj">
+            <label for="depSbj">Subject</label>
+            <input (keydown)="perventWhiteSpace($event)" *ngFor="let dep of takendDepartmentObjectForEdit.depSbj" 
+            [value]="dep" type="text" id="depSbj" 
+            name="depSbj" class="form-control my-2">
+        </div>
+
+        <section>
+            <div>
+                <p>Options if you want to add or remove subjects</p>
+            </div>
+            <button type="button" (click)="removeDepartmentFieldForEdit()" class="btn btn-sm btn-danger">-</button>
+            <button type="button" (click)="addDepartmentFieldForEdit()" class="btn btn-sm btn-success mx-1">+</button>
+        </section>
+    
+        <div class="form-group">
+            <label for="yearOfStudy">Current Year of Study</label>
+            <input matInput placeholder="year of study" mask="0" formControlName="yearOfStudy" id="yearOfStudy" name="yearOfStudy" class="form-control w-25">
+        </div>
+
+<section class="my-3">
+    <button class="btn btn-sm btn-danger" type="button" (click)="closeEditDepartmentModal()">Odustani</button>
+    <button class="btn btn-sm btn-secondary mx-2" type="submit" >Sacuvaj Promene</button>
+</section>
+    
+    </form>
+    
+    
+    </div>
+
+
+    <!--ADD DEPARTMENT-->
+
+    <div *ngIf="_addDepartmentModal" class="addDepartmentModal modalForToggle">
+
+        <form [formGroup]="DepartmentFormBuilderAdd" #form="ngForm" (ngSubmit)="addNewDepartment(form)">
+        <div class="w-100 d-flex justify-content-between">
+            <h2>Add New Department</h2>
+              <p (click)="closeAddDepartmentModal()">X</p>
+        </div>
+
+            <div class="form-group">
+                <label for="depName">Department Name</label>
+                <input (keydown)="perventWhiteSpace($event)"  ngModel minlength="5" type="text" formControlName="depName" id="depName" name="depName" class="form-control">
+            </div>
+        
+            <div class="form-group" formArrayName="depSbj">
+                <label for="depSbj">subject</label>
+                <input (keydown)="perventWhiteSpace($event)" 
+                *ngFor="let depObj of departmentSubject['controls']; index as i" 
+                placeholder="Add some subject" minlength="5" type="text" 
+                 id="depSbj"
+                 name="subject" class="form-control my-2"
+                 formControlName="{{i}}">
+            </div>
+        <p>Options if you want to add more subjects</p>
+            <button type="button" class="btn btn-sm btn-danger" (click)="removeInputField()">-</button>
+            <button type="button" class="btn btn-sm mx-2 btn-success" (click)="addSomeInput()">+</button>
+        
+            <div class="form-group my-2">
+                <label for="yearOfStudy">Current Year of Study</label>
+                <select ngModel required class="mx-2" name="yearOfStudy" id="yearOfStudy" formControlName="yearOfStudy">
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                </select>
+            </div>
+            <div class="my-2">
+                <button class="btn btn-sm btn-danger" (click)="closeAddDepartmentModal()">Odustani</button>
+                <button class="btn btn-sm btn-secondary mx-2" type="submit" >Sacuvaj</button>
+            </div>
+        </form>
+        
+        </div>
+
+
+<div *ngIf="bgShadow" class="bgShadow"></div>

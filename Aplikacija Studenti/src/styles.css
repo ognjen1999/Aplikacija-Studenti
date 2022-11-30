@@ -1,0 +1,45 @@
+*{
+    font-family: sans-serif;
+    user-select: none;
+    margin: 0;
+    padding: 0;
+}
+
+.bgShadow{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 1;
+}
+
+.modalForToggle{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 50%;
+    max-height: 350px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    padding: 10px 20px;
+    z-index: 10;
+    background: #fff;
+    border: 2px solid #000;
+}
+
+footer{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: rgb(180, 50, 72);
+    color: white;
+    font-weight: 500;
+    display: grid;
+    place-items: center;
+    padding-top: 5px;
+}

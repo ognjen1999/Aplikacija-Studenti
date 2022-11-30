@@ -1,0 +1,39 @@
+<header class="row border border-dark">
+    <div class="col-md-10">
+        <h2>Here you can see more information of <span>{{userObj?.name}} {{userObj?.surname}}</span> </h2>
+    </div>
+</header>
+<hr>
+<div class="row">
+    <div class="col-md-6">
+        <div>User name: <span>{{userObj?.name}}</span></div>
+        <div>User surname: <span>{{userObj?.surname}}</span></div>
+        <div>User email: <span>{{userObj?.auth.email}}</span></div>
+        <div>User password: <span>{{userObj?.auth.password}}</span></div>
+    </div>
+    <div class="col-md-6">
+        <p>Living City: <span>{{userObj?.city}}</span></p>
+        <p>JMBG: <span>{{userObj?.jmbg}}</span></p>
+        <p>He is in the group of <span>{{userObj?.typeOfUser}}</span></p>
+    </div>
+</div>
+<div>
+    <button (click)="toggleShowMore()" *ngIf="!showMore" class="btn btn-sm btn-primary">Show more +</button>
+    <button (click)="toggleShowMore()" *ngIf="showMore" class="btn btn-sm btn-danger">Show less -</button>
+    <hr>
+    <div class="departmentInfo" *ngIf="showDepartmentInfo">
+     <div *ngIf="selectedTypeOfUser == 'Profesori'"><p> {{userObj.name}} Teaches at department name: <span>{{userObj.depName}}</span></p></div>
+     <div *ngIf="selectedTypeOfUser == 'Studenti'"> <p> {{userObj.name}} Attends at department name: <span>{{userObj.depName}}</span></p></div>
+        <p *ngIf="selectedTypeOfUser == 'Profesori'">Teaches subjects on the chosen department:</p>
+        <p *ngIf="selectedTypeOfUser == 'Studenti'">Attends subjects on the chosen department:</p>
+        <p *ngFor="let sbj of userObj.depSbj; index as i"> {{i+1}}: <span style="font-weight: 700;"> {{sbj}} </span> </p>
+        <p>year of attendance: <span>{{userObj.yearOfStudy}}</span></p>
+        <hr>
+       <div>
+        <div class="info-circle">
+            <i class="bi bi-info-circle"></i>
+            <p>You can add department in edit mode</p>
+        </div>
+       </div>
+    </div>
+</div>

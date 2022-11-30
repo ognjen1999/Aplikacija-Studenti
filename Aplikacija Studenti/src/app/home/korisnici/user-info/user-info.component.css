@@ -1,0 +1,57 @@
+h2 span{
+    text-decoration: underline;
+    color: #444;
+}
+
+.col-md-6:nth-child(2){
+    /* line-height: 10px; */
+    text-align: right;
+}
+
+.col-md-6 p,div{
+    font-size: 18px;
+}
+
+.col-md-6 p, div span{
+    text-decoration: underline;
+    font-weight: 600;
+    font-size: 20px;
+    letter-spacing: 1px;
+}
+
+header .col-md-10 h2 span{
+    font-size: 26px;
+}
+
+.department-info div p{
+    display: inline;
+}
+.department-info div{
+    display: inline;
+}
+
+
+
+.info-circle{
+    position: relative;
+    padding: 10px;
+}
+
+.info-circle i {
+    font-size: 35px;
+    z-index: 10;
+    background-color: white;
+    position: absolute;
+    width: 100%;
+    transition: 500ms;
+}
+.info-circle:hover i {
+    transform: translateX(100%);
+}
+
+.info-circle p{
+    position: absolute;
+    z-index: 1;
+    top: 10px;
+    left: 10px;
+}

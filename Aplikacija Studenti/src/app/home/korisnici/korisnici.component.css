@@ -1,0 +1,22 @@
+div.warning-window{
+    position: fixed;
+    top: 3px;
+    right: 0px;
+    background-color: rgb(150, 150, 212);
+    padding: 2px 3px;
+    border: 3px solid orange;
+    display: flex;
+    align-items: center;
+    box-shadow: inset 2px 2px 8px black;
+    transform: translateX(405px);
+    transition: 400ms;
+}
+
+div.warning-window:hover{
+    transform: translateX(0px);
+}
+
+div.warning-window i{
+    font-size: 25px;
+    margin: 0px 8px;
+}

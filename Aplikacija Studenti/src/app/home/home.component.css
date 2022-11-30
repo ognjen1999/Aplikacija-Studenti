@@ -1,0 +1,142 @@
+img.desanka{
+    max-width: 300px;
+}
+
+.header-section{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.header-section div{
+    width: 50%;
+}
+.header-section .img-holder{
+    text-align: center;
+}
+.header-section .img-holder img{
+    width: 500px;
+    height: 100%;
+}
+
+.wrapper{
+    display: inline-flex;
+}
+
+.wrapper .static-txt{
+    color: #000;
+    font-size: 30px;
+    display: grid;
+    place-items: center;
+    transform: translate(20px, -7px);
+}
+.wrapper .dynamic-txts{
+    line-height: 90px;
+    height: 90px;
+    overflow: hidden;
+}
+.wrapper .dynamic-txts li{
+    list-style: none;
+    color: rebeccapurple;
+    font-size:30px;
+    animation: slide 6s steps(4) infinite;
+    top: 0;
+    position: relative;
+}
+.wrapper .dynamic-txts li span{
+    position: relative;
+}
+.wrapper .dynamic-txts li span::after{
+    content: '';
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    border-left: 2px solid black;
+    animation: typing 1.5s steps(10) infinite;
+    background: white;
+    left: 0;
+    bottom: 0;
+}
+
+main{
+    margin: 20px 0px;
+    display: grid;
+    justify-content: space-around;
+    grid-template-rows: 300px;
+    grid-template-columns: 300px 300px 300px 300px;
+    gap: 8px;
+}
+main div{
+    border: 1px solid black;
+    position: relative;
+    cursor:pointer;
+}
+
+main div img{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    filter: brightness(50%);
+    transition: 200ms;
+    object-fit: cover;
+}
+main div:hover img{
+    filter: brightness(80%);
+}
+main div p{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    text-align: center;
+    color: white;
+}
+.current-active-user{
+    position: absolute;
+    top: 5px;
+    right: 5px;
+}
+
+
+@keyframes typing{
+    100%{
+        left: 100%;
+        margin: 0 -35px 0 35px;
+    }
+}
+
+@keyframes slide{
+    100%{
+        top: -360px;
+    }
+}
+
+@media (max-width: 1400px){
+    main{
+        grid-template-columns: 300px 300px 300px;
+        grid-template-rows: 300px;
+    }
+}
+
+@media (max-width:768px){
+   .header-section{
+        justify-content: space-around;
+    }
+   .header-section div{
+        width: 100%;
+    }
+    main{
+        grid-template-columns: 300px 300px;
+        grid-template-rows: 300px 300px;
+    }
+
+    @media (max-width:425px){
+        main{
+            grid-template-columns: 300px;
+            grid-template-rows: 300px 300px 300px 300px;
+        }
+    }
+}

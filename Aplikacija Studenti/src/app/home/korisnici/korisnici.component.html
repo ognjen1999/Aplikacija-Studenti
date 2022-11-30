@@ -1,0 +1,208 @@
+<h1>Aplikacija {{activeUserName}}</h1>
+<div class="d-flex justify-content-between w-100 bg-dark align-items-center p-2">
+    <button class="btn btn-sm btn-secondary" (click)="activeAddUserModal()">+ Dodaj korisnika aplikacije</button>
+
+    <div class="form-group d-flex pt-2">
+        <button (click)="searchUser()" class="btn btn-sm btn-primary d-flex pt-2"><span> <i class="bi bi-search"></i>
+            </span> Search</button>
+        <input (keydown)="preventWhiteSpace($event)" placeholder="Search by name" [(ngModel)]="pronadjiKorisnika" type="text" class="form-control ml-2 mx-2">
+    </div>
+</div>
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Surname</th>
+            <th>jmbg</th>
+            <th>City</th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let korisnik of korisnici | filter:pronadjiKorisnika
+        | paginate: { 
+            itemsPerPage: tableSize,
+            currentPage:page,
+            totalItems:count}
+        ">
+
+            <!-- <div *ngIf="!pronadjiKorisnika || korisnik.name.toLowerCase().includes(pronadjiKorisnika)"> -->
+            <td>{{korisnik.name}}</td>
+            <td>{{korisnik.surname}}</td>
+            <td>{{korisnik.jmbg}}</td>
+            <td>{{korisnik.city}}</td>
+            <td>
+                <button class="btn btn-sm btn-primary" (click)="checkUserInfo(korisnik.id)">Check Info</button>
+            </td>
+            <td>
+                <button class="btn btn-sm btn-danger" (click)="deleteUser(korisnik.id)">Delete</button>
+            </td>
+            <td>
+                <button class="btn btn-sm btn-warning" (click)="openUpdateUserModal(korisnik.id)">Edit</button>
+            </td>
+            <!-- </div> -->
+        </tr>
+    </tbody>
+</table>
+
+<footer>
+    <pagination-controls nextLabel="Next" previousLabel="Prev" (pageChange)="onTableDataChange($event)">
+    </pagination-controls>
+</footer>
+
+
+<!--MODALS-->
+
+<div *ngIf="addUserModal" class="addUserModal modalForToggle">
+
+    <form [formGroup]="addUserFormBuilder" #form="ngForm" (ngSubmit)="addThisUser(form)">
+        <div class="w-100 d-flex justify-content-between">
+            <h2>Add User</h2>
+            <p (click)="deActiveAddUserModal()">X</p>
+        </div>
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input style="font-style:italic;" placeholder="Enter name" type="text" ngModel formControlName="name"
+                id="name" name="name" class="form-control">
+        </div>
+
+        <div class="form-group">
+            <label for="surname">Surname</label>
+            <input type="text" ngModel formControlName="surname" id="surname" name="surname" class="form-control">
+        </div>
+
+        <div class="form-group">
+            <label for="city">City</label>
+            <input type="text" ngModel formControlName="city" id="city" name="city" class="form-control">
+        </div>
+
+        <div class="form-group">
+            <label for="jmbg">jmbg</label>
+            <input type="text" minlength="13" matInput placeholder="00-00-000-000-000" mask="00-00-000-000-000" ngModel formControlName="jmbg" id="jmbg" name="jmbg" class="form-control">
+        </div>
+
+        <hr>
+
+        <h5>Select type of User</h5>
+        <select name="typeOfUser" formControlName="typeOfUser" id="typeOfUser" class="form-control">
+            <option value="Studenti">Student</option>
+            <option value="Profesori">Profesor</option>
+        </select>
+
+        <div formGroupName="auth">
+
+
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" ngModel formControlName="email" id="email" name="email" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" ngModel formControlName="password" id="password" name="password"
+                    class="form-control">
+            </div>
+
+        </div>
+
+        <div class="form-group">
+            <label for="re-password">Re-Password</label>
+            <input type="password" ngModel formControlName="rePassword" id="Repassword" name="Repassword"
+                class="form-control">
+        </div>
+
+        <div class="button-group d-flex justify-content-between mt-2">
+            <button [disabled]="!form.valid" class="btn btn-sm btn-secondary">Add User</button>
+            <button class="btn btn-default" (click)="deActiveAddUserModal()">Close</button>
+        </div>
+    </form>
+
+</div>
+
+
+
+
+<!--Edit userModal-->
+
+<div *ngIf="editUserModal" class="editUserModal modalForToggle">
+
+    <form [formGroup]="editUserFormBuilder" #form="ngForm" (ngSubmit)="updateUser(form)">
+        <div class="w-100 d-flex justify-content-between">
+            <h2>Edit This User</h2>
+            <p (click)="deActiveEditUserModal()">X</p>
+        </div>
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input (keydown)="preventWhiteSpace($event)" type="text" formControlName="name" id="name" name="name" class="form-control">
+        </div>
+
+        <div class="form-group">
+            <label for="surname">Surname</label>
+            <input (keydown)="preventWhiteSpace($event)" type="text" formControlName="surname" id="surname" name="surname" class="form-control">
+        </div>
+
+        <div class="form-group">
+            <label for="city">City</label>
+            <input (keydown)="preventWhiteSpace($event)" type="text" formControlName="city" id="city" name="city" class="form-control">
+        </div>
+        <div class="row">
+
+            <div class="form-group col-3">
+                <label for="jmbg">jmbg</label>
+                <input (keydown)="preventWhiteSpace($event)" minlength="13" matInput placeholder="00-00-000-000-000" mask="00-00-000-000-000" formControlName="jmbg" id="jmbg" name="jmbg" class="form-control">
+            </div>
+
+                <label>Chose department:</label>
+
+                <select required formControlName="department" class="form-control">
+                    <option *ngFor="let dep of departments" [ngValue]="dep">{{dep.depName}}</option>
+                </select>
+
+            </div>
+
+        <hr>
+
+        <h5>Select type of User</h5>
+        <select name="typeOfUser" formControlName="typeOfUser" id="typeOfUser" class="form-control">
+            <option disabled value="Studenti">Student</option>
+            <option disabled value="Profesori">Profesor</option>
+        </select>
+
+        <section formGroupName="auth">
+
+
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input (keydown)="preventWhiteSpace($event)" type="email" formControlName="email" id="email" name="email" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input (keydown)="preventWhiteSpace($event)" type="password" formControlName="password" id="password" name="password"
+                    class="form-control">
+            </div>
+
+        </section>
+
+        <div class="form-group">
+            <label for="Repassword">Repeat the password</label>
+            <input (keydown)="preventWhiteSpace($event)" type="password" formControlName="rePassword" id="Repassword" name="Repassword"
+                class="form-control">
+        </div>
+
+        <div class="button-group d-flex justify-content-between mt-2">
+            <button [disabled]="!form.valid" class="btn btn-sm btn-secondary">Finish Editing</button>
+            <button class="btn btn-default" (click)="deActiveEditUserModal()">Close</button>
+        </div>
+    </form>
+
+</div>
+
+<div *ngIf="bgShadow" class="bgShadow"></div>
+<div class="warning-window">
+    <i class="bi bi-exclamation-circle"></i>
+    If you want to add Department, there is an option in edit.
+</div>

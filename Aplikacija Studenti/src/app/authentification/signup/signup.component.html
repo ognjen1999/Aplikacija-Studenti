@@ -1,0 +1,59 @@
+    <div class="row border p-4 mt-5">
+        <div class="col-12">
+            <h1>Create Account</h1>
+            <form [formGroup]="userFormBuilder" (ngSubmit)="signup(f)" #f="ngForm">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" placeholder="name" class="form-control" ngModel formControlName="name">
+                </div>
+
+                <div class="form-group">
+                    <label for="surname">Surname</label>
+                    <input type="text" id="surname" name="surname" placeholder="surname" ngModel class="form-control" formControlName="surname">
+                </div>
+
+                
+                <div class="row">
+                    <div class="form-group col-sm-2">
+                        <label for="jmbg">Jmbg</label>
+                        <input class="form-control" minlength="13" placeholder="00-00-000-000-000" mask="00-00-000-000-000" id="jmbg" matInput formControlName="jmbg">
+                    </div>
+                    <div class="form-group col-md-10">
+                        <label for="city">City</label>
+                        <input type="text" id="city" name="city" placeholder="City" ngModel class="form-control" formControlName="city">
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <h5>Which type of user are you ?</h5>
+                </div>
+                <div class="row d-block">
+                    <div class="form-group col-sm-3" style="float: left;">
+
+                        <select name="typeOfUser" formControlName="typeOfUser" class="form-control" id="typeOfUser">
+                            <option value="Profesori">Profesor</option>
+                            <option value="Studenti">Student</option>
+                        </select>
+                    </div>
+            </div>
+
+            <div formGroupName="auth">
+                <div class="form-group">
+                    <br><br>
+                <label for="email">Email</label>
+                <input required type="email" id="email" name="email" placeholder="email" formControlName="email" ngModel class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input minlength="6" required type="password" id="password" placeholder="password" ngModel formControlName="password" name="password" class="form-control">
+            </div> 
+        </div>
+
+            <div class="form-group">
+                <label for="rePassword">Re Enter password</label>
+                <input minlength="6" required type="password" id="rePassword" formControlName="rePassword" placeholder="Re-Password" ngModel name="rePassword" class="form-control">
+            </div>
+            <button class="btn btn-secondary mt-3" type="submit" >SignUp</button>
+        </form>
+    </div>
+</div>

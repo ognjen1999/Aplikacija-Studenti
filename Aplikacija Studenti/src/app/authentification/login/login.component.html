@@ -1,0 +1,25 @@
+<div class="row border p-4 mt-5">
+    <div class="col-12">
+        <h1>Hurry up! Login!</h1>
+        <form (ngSubmit)="login(f)" [formGroup]="loginBuilder" #f="ngForm" autocomplete="off">
+            <hr>
+
+           <div formGroupName="auth">
+
+       
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input required type="email" id="email" formControlName="email" placeholder="Email" name="email" ngModel class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input minlength="6" required type="password" formControlName="password" id="password" placeholder="password" ngModel name="password" class="form-control">
+            </div>
+            </div>
+
+            <button class="btn btn-secondary my-1" type="submit">LogIn</button>
+            <a (click)="goSignIn()">Dont have an account ?</a>
+        </form>
+        <button (click)="_authService.signInWithGoogle()" class="mt-2" style="background-color: white;" > <img src="https://play-lh.googleusercontent.com/aFWiT2lTa9CYBpyPjfgfNHd0r5puwKRGj2rHpdPTNrz2N9LXgN_MbLjePd1OTc0E8Rl1"> Sign in with Google</button>
+    </div>
+</div>
